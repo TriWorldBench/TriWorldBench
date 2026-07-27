@@ -1,0 +1,130 @@
+{
+  "episode": "episode77",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "a black dustbin",
+          "B": "a yellow liquid container with green top",
+          "C": "a bottle with curved body shape",
+          "D": "a red-capped soda bottle"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        406,
+        432
+      ],
+      "gt_episode_length": 663
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "a black dustbin",
+          "B": "a yellow liquid container with green top",
+          "C": "a bottle with curved body shape",
+          "D": "a red-capped soda bottle"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        224,
+        227
+      ],
+      "gt_episode_length": 663
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "a black dustbin",
+          "B": "a yellow liquid container with green top",
+          "C": "a bottle with curved body shape",
+          "D": "a red-capped soda bottle"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        93,
+        97
+      ],
+      "gt_episode_length": 663
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "touching the item",
+          "C": "hovering above it",
+          "D": "moving away"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        575,
+        611
+      ],
+      "gt_episode_length": 663
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "touching the item",
+          "C": "hovering above it",
+          "D": "moving away"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        62,
+        67
+      ],
+      "gt_episode_length": 663
+    }
+  ]
+}

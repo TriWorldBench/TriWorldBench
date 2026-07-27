@@ -1,0 +1,200 @@
+# v3.3: English dual-view prompt, 5-point deduction criteria, scores 1-5.
+VLM_PROMPT_TEMPLATE_LEFT_V3 = """You are a robot dual-view consistency evaluator for the LEFT active arm.
+
+You are given two images captured at the same timestep:
+1. head-view: third-person camera
+2. left-wrist-view: camera mounted on the left wrist
+
+Task instruction: {instruction}
+Current phase type: {phase}
+Current phase description: {description}
+Active arm under evaluation: left
+
+Evaluate whether the TWO views are visually consistent with the SAME timestep of the SAME left-arm robot action.
+
+Use one deduction-based overall consistency score.
+
+Scoring method:
+- Start the overall score from 5.0.
+- For each of the 4 criteria, choose no deduction, deduct 0.5, or deduct 1.0.
+- Deduct points only for visible problems.
+- Use no deduction when a criterion cannot be verified because of normal wrist-camera limits and there is no visible contradiction.
+- Do not double-count the same visibility limitation across multiple criteria.
+- Score from the visible evidence. Missing, partial, close, or ambiguous wrist-view evidence alone should not be treated as negative evidence.
+- Lower the score only when visible evidence clearly supports the deduction.
+- Apply the four criteria first, sum the deductions, then use the score calibration only as a sanity check.
+- Final score must be a number from 1 to 5 in 0.5 increments.
+
+Score calibration after applying the criteria:
+- Around 5.0 means none of the four criteria has a visible reason for deduction.
+- Around 4.5 means only one minor criterion-level deduction was applied; the same timestep/action remains clearly plausible.
+- Around 4.0 means one major deduction or two minor deductions were applied; the same timestep/action is still plausible.
+- 3.5 or lower requires at least one concrete visible contradiction, a truly unusable view, or multiple independent visible problems after applying the criteria.
+- 2.5 or lower should be used only for strong contradictions or unusable generated evidence, not merely for an unclear wrist view.
+- Normal wrist close-up, crop, ordinary blur, occlusion, partial view, or low texture is not itself a criterion-level deduction.
+- If the head-view supports the phase/action/target and the wrist-view provides compatible close-up cues or does not visibly contradict the head-view, a final score near 4.5 or 5.0 is appropriate after applying the criteria.
+
+Wrist-view evidence rules:
+- Compatible close-up: the wrist-view shows a large surface, flat color region, texture, edge, object part, or blurred nearby shape that could belong to the target object. Treat this as compatible evidence, not "no object".
+- Clear empty: the wrist-view clearly shows empty relevant space, an empty gripper, or clear non-contact with no compatible target cues nearby. Only this can support "no object" or "no grasp".
+- Clear different object: the wrist-view clearly shows an incompatible object by category, color, shape, or scene context. Only this can support object incompatibility.
+- Unusable view: the wrist-view is severely smeared, ghosted, overexposed, black, or visually collapsed so that neither robot/action nor target-object situation is usable. Deduct only under visual fidelity unless it also shows a direct contradiction.
+
+Overall consistency criteria:
+1. Phase-action match across views:
+   No deduction if the head-view is compatible with the current phase and the wrist-view does not visibly contradict it.
+   No deduction if the head-view shows the left gripper close to, touching, or holding the target object and the wrist-view shows a close-up surface, color patch, texture, or partial object that could be the same target.
+   Treat the phase description as an approximate helper; do not punish minor disagreement with the phase text if the two images remain visually compatible.
+   Do not treat lack of a complete wrist-view action as phase mismatch.
+   Deduct 0.5 if a visible detail mildly suggests a different phase.
+   Deduct 1.0 only if visible action/state clearly belongs to a different phase.
+
+2. Contact/grasp agreement across views:
+   No deduction if the TWO views agree on the left gripper contact state, such as both indicate grasping/contact or both indicate no grasp/contact, or if this agreement cannot be verified.
+   No deduction when contact is clear in the head-view but the wrist-view is too close, cropped, or occluded to show the full gripper-object contact.
+   Do not infer "no grasp" from a wrist close-up, blurred gripper edge, missing contact boundary, or target surface filling the image.
+   Deduct 0.5 if the TWO views show a minor visible contact/grasp inconsistency.
+   Deduct 1.0 only if one view clearly shows grasping/contact and the other CLEARLY shows an empty gripper or clear non-contact with no compatible target nearby.
+   Unreadable wrist-view rule: a wrist-view that is blurred, collapsed, black, cropped, partial, or otherwise unreadable is NOT evidence of "no contact" or "empty gripper". This 1.0 deduction requires the wrist-view to CLEARLY show an empty gripper; never trigger it from a wrist-view that is merely unreadable.
+   When the head-view clearly shows grasping/contact and the wrist-view CLEARLY shows an empty gripper (not merely unreadable), both this criterion and criterion 4 are violated and each deducts 1.0.
+
+3. Visual fidelity and view usability:
+   No deduction for ordinary wrist-camera blur, cropping, close-up, partial object view, occlusion, table texture, gripper-only view, or lighting difference.
+   No deduction for visible overlay text or labels added by the pipeline; ignore such text completely.
+   Deduct 0.5 only if one view has synthetic artifacts, color cast, over-smoothing, ghosting, deformation, or blur that clearly reduces the usability of the robot/action/object evidence.
+   Deduct 1.0 only if BOTH views are unusable, OR the head-view itself is unusable or contradicts the phase.
+   Deduct only 0.5 if ONLY the wrist-view is severely blurred/collapsed/black/unreadable while the head-view is clear and confirms the current phase/action/target.
+   Do not use a poor wrist-view alone to drop the overall score below 4.0 when the head-view is clear and there is no visible contradiction.
+
+4. Target object compatibility across views:
+   No deduction if the target/manipulated object can be considered compatible across the TWO views using ANY available cue, such as category, color, shape, size, texture, local appearance, gripper context, or nearby scene context.
+   No deduction if the head-view shows the left gripper near or holding the target object and the wrist-view is dominated by a large close-up of a compatible color, surface, texture, edge, or partial shape. This is normal for wrist cameras near a grasped object.
+   No deduction if BOTH views consistently show no target/manipulated object or no object being held/manipulated, but only when this is compatible with the current phase.
+   No deduction if object compatibility cannot be verified but there is no clear contradiction.
+   Do not call the wrist-view "no object" when it shows a large surface, color patch, texture, blur, or occlusion that could be caused by the target being very close.
+   Deduct 0.5 if the TWO views show a minor target-object inconsistency.
+   Deduct 1.0 only if the TWO views clearly show incompatible target objects, OR one view clearly shows object manipulation while the other CLEARLY shows empty relevant space/free gripper with no compatible target cues.
+   Unreadable wrist-view rule: a wrist-view that is blurred, collapsed, black, cropped, partial, or otherwise unreadable is NOT evidence of "no object" or "empty space". This 1.0 deduction requires the wrist-view to CLEARLY show empty relevant space or a clearly incompatible object; never trigger it from a wrist-view that is merely unreadable.
+   When this clear-empty contradiction co-occurs with a criterion-2 contact contradiction (wrist CLEARLY empty, not merely unreadable), both criteria deduct 1.0.
+
+Important:
+- Always judge dual-view consistency: whether head-view and left-wrist-view describe the same timestep, same left-arm state, and same target-object situation.
+- Interpret the wrist camera as a very close camera mounted beside the gripper. During grasp_close, hold, manipulate, and release_open, the target object may appear extremely large, cropped, blurred, or as a flat color/texture region.
+- A large nearby object surface in the wrist-view is usually positive evidence of proximity/contact, not evidence that the object is absent.
+- If the head-view shows the left gripper close to or holding an object, do not require the wrist-view to show the whole object, the whole gripper, or a clean contact boundary.
+- Object compatibility must evaluate the manipulated/target object only, not the table, general background, robot body, or unrelated objects.
+- Do not require exact object recognition from the wrist view. A partial close-up with compatible color/shape/texture/context can be enough, even if it fills most of the wrist image.
+- Wrist-camera close-up, cropping, occlusion, blur, and lighting changes are normal; do not penalize them unless they create a clear contradiction.
+- Do not convert lack of wrist-view visibility into "phase mismatch", "object incompatibility", or "no grasp" unless the visible content directly contradicts the head-view.
+- If an entire view is severely ghosted, smeared, or visually unusable, apply at most one visibility-related deduction unless it also creates a direct contradiction; do not treat ordinary wrist-view blur, low texture, close-up surfaces, or table-like regions as object incompatibility.
+- Penalize visual generation failures only when they make the robot/action/object evidence unusable, such as severe blur, ghosting, collapsed geometry, large color wash, empty-looking views, or unusable target/robot appearance. Do not penalize overlay text or camera labels.
+- A score below 4 must be justified by a concrete visible contradiction or a truly unusable view.
+- When uncertain, do not force a contradiction. Use no deduction for a criterion when the uncertainty comes only from normal wrist close-up, crop, partial visibility, blur, or occlusion.
+- The reason should describe the visible contradiction. Do not write "contradiction" when the issue is only that the wrist-view is unclear or partial.
+
+Output ONLY valid JSON, no other text:
+{{
+  "overall_consistency_score": number from 1 to 5 in 0.5 increments,
+  "overall_consistency_reason": "brief reason under 30 words"
+}}
+"""
+
+VLM_PROMPT_TEMPLATE_RIGHT_V3 = """You are a robot dual-view consistency evaluator for the RIGHT active arm.
+
+You are given two images captured at the same timestep:
+1. head-view: third-person camera
+2. right-wrist-view: camera mounted on the right wrist
+
+Task instruction: {instruction}
+Current phase type: {phase}
+Current phase description: {description}
+Active arm under evaluation: right
+
+Evaluate whether the TWO views are visually consistent with the SAME timestep of the SAME right-arm robot action.
+
+Use one deduction-based overall consistency score.
+
+Scoring method:
+- Start the overall score from 5.0.
+- For each of the 4 criteria, choose no deduction, deduct 0.5, or deduct 1.0.
+- Deduct points only for visible problems.
+- Use no deduction when a criterion cannot be verified because of normal wrist-camera limits and there is no visible contradiction.
+- Do not double-count the same visibility limitation across multiple criteria.
+- Score from the visible evidence. Missing, partial, close, or ambiguous wrist-view evidence alone should not be treated as negative evidence.
+- Lower the score only when visible evidence clearly supports the deduction.
+- Apply the four criteria first, sum the deductions, then use the score calibration only as a sanity check.
+- Final score must be a number from 1 to 5 in 0.5 increments.
+
+Score calibration after applying the criteria:
+- Around 5.0 means none of the four criteria has a visible reason for deduction.
+- Around 4.5 means only one minor criterion-level deduction was applied; the same timestep/action remains clearly plausible.
+- Around 4.0 means one major deduction or two minor deductions were applied; the same timestep/action is still plausible.
+- 3.5 or lower requires at least one concrete visible contradiction, a truly unusable view, or multiple independent visible problems after applying the criteria.
+- 2.5 or lower should be used only for strong contradictions or unusable generated evidence, not merely for an unclear wrist view.
+- Normal wrist close-up, crop, ordinary blur, occlusion, partial view, or low texture is not itself a criterion-level deduction.
+- If the head-view supports the phase/action/target and the wrist-view provides compatible close-up cues or does not visibly contradict the head-view, a final score near 4.5 or 5.0 is appropriate after applying the criteria.
+
+Wrist-view evidence rules:
+- Compatible close-up: the wrist-view shows a large surface, flat color region, texture, edge, object part, or blurred nearby shape that could belong to the target object. Treat this as compatible evidence, not "no object".
+- Clear empty: the wrist-view clearly shows empty relevant space, an empty gripper, or clear non-contact with no compatible target cues nearby. Only this can support "no object" or "no grasp".
+- Clear different object: the wrist-view clearly shows an incompatible object by category, color, shape, or scene context. Only this can support object incompatibility.
+- Unusable view: the wrist-view is severely smeared, ghosted, overexposed, black, or visually collapsed so that neither robot/action nor target-object situation is usable. Deduct only under visual fidelity unless it also shows a direct contradiction.
+
+Overall consistency criteria:
+1. Phase-action match across views:
+   No deduction if the head-view is compatible with the current phase and the wrist-view does not visibly contradict it.
+   No deduction if the head-view shows the right gripper close to, touching, or holding the target object and the wrist-view shows a close-up surface, color patch, texture, or partial object that could be the same target.
+   Treat the phase description as an approximate helper; do not punish minor disagreement with the phase text if the two images remain visually compatible.
+   Do not treat lack of a complete wrist-view action as phase mismatch.
+   Deduct 0.5 if a visible detail mildly suggests a different phase.
+   Deduct 1.0 only if visible action/state clearly belongs to a different phase.
+
+2. Contact/grasp agreement across views:
+   No deduction if the TWO views agree on the right gripper contact state, such as both indicate grasping/contact or both indicate no grasp/contact, or if this agreement cannot be verified.
+   No deduction when contact is clear in the head-view but the wrist-view is too close, cropped, or occluded to show the full gripper-object contact.
+   Do not infer "no grasp" from a wrist close-up, blurred gripper edge, missing contact boundary, or target surface filling the image.
+   Deduct 0.5 if the TWO views show a minor visible contact/grasp inconsistency.
+   Deduct 1.0 only if one view clearly shows grasping/contact and the other CLEARLY shows an empty gripper or clear non-contact with no compatible target nearby.
+   Unreadable wrist-view rule: a wrist-view that is blurred, collapsed, black, cropped, partial, or otherwise unreadable is NOT evidence of "no contact" or "empty gripper". This 1.0 deduction requires the wrist-view to CLEARLY show an empty gripper; never trigger it from a wrist-view that is merely unreadable.
+   When the head-view clearly shows grasping/contact and the wrist-view CLEARLY shows an empty gripper (not merely unreadable), both this criterion and criterion 4 are violated and each deducts 1.0.
+
+3. Visual fidelity and view usability:
+   No deduction for ordinary wrist-camera blur, cropping, close-up, partial object view, occlusion, table texture, gripper-only view, or lighting difference.
+   No deduction for visible overlay text or labels added by the pipeline; ignore such text completely.
+   Deduct 0.5 only if one view has synthetic artifacts, color cast, over-smoothing, ghosting, deformation, or blur that clearly reduces the usability of the robot/action/object evidence.
+   Deduct 1.0 only if BOTH views are unusable, OR the head-view itself is unusable or contradicts the phase.
+   Deduct only 0.5 if ONLY the wrist-view is severely blurred/collapsed/black/unreadable while the head-view is clear and confirms the current phase/action/target.
+   Do not use a poor wrist-view alone to drop the overall score below 4.0 when the head-view is clear and there is no visible contradiction.
+
+4. Target object compatibility across views:
+   No deduction if the target/manipulated object can be considered compatible across the TWO views using ANY available cue, such as category, color, shape, size, texture, local appearance, gripper context, or nearby scene context.
+   No deduction if the head-view shows the right gripper near or holding the target object and the wrist-view is dominated by a large close-up of a compatible color, surface, texture, edge, or partial shape. This is normal for wrist cameras near a grasped object.
+   No deduction if BOTH views consistently show no target/manipulated object or no object being held/manipulated, but only when this is compatible with the current phase.
+   No deduction if object compatibility cannot be verified but there is no clear contradiction.
+   Do not call the wrist-view "no object" when it shows a large surface, color patch, texture, blur, or occlusion that could be caused by the target being very close.
+   Deduct 0.5 if the TWO views show a minor target-object inconsistency.
+   Deduct 1.0 only if the TWO views clearly show incompatible target objects, OR one view clearly shows object manipulation while the other CLEARLY shows empty relevant space/free gripper with no compatible target cues.
+   Unreadable wrist-view rule: a wrist-view that is blurred, collapsed, black, cropped, partial, or otherwise unreadable is NOT evidence of "no object" or "empty space". This 1.0 deduction requires the wrist-view to CLEARLY show empty relevant space or a clearly incompatible object; never trigger it from a wrist-view that is merely unreadable.
+   When this clear-empty contradiction co-occurs with a criterion-2 contact contradiction (wrist CLEARLY empty, not merely unreadable), both criteria deduct 1.0.
+
+Important:
+- Always judge dual-view consistency: whether head-view and right-wrist-view describe the same timestep, same right-arm state, and same target-object situation.
+- Interpret the wrist camera as a very close camera mounted beside the gripper. During grasp_close, hold, manipulate, and release_open, the target object may appear extremely large, cropped, blurred, or as a flat color/texture region.
+- A large nearby object surface in the wrist-view is usually positive evidence of proximity/contact, not evidence that the object is absent.
+- If the head-view shows the right gripper close to or holding an object, do not require the wrist-view to show the whole object, the whole gripper, or a clean contact boundary.
+- Object compatibility must evaluate the manipulated/target object only, not the table, general background, robot body, or unrelated objects.
+- Do not require exact object recognition from the wrist view. A partial close-up with compatible color/shape/texture/context can be enough, even if it fills most of the wrist image.
+- Wrist-camera close-up, cropping, occlusion, blur, and lighting changes are normal; do not penalize them unless they create a clear contradiction.
+- Do not convert lack of wrist-view visibility into "phase mismatch", "object incompatibility", or "no grasp" unless the visible content directly contradicts the head-view.
+- If an entire view is severely ghosted, smeared, or visually unusable, apply at most one visibility-related deduction unless it also creates a direct contradiction; do not treat ordinary wrist-view blur, low texture, close-up surfaces, or table-like regions as object incompatibility.
+- Penalize visual generation failures only when they make the robot/action/object evidence unusable, such as severe blur, ghosting, collapsed geometry, large color wash, empty-looking views, or unusable target/robot appearance. Do not penalize overlay text or camera labels.
+- A score below 4 must be justified by a concrete visible contradiction or a truly unusable view.
+- When uncertain, do not force a contradiction. Use no deduction for a criterion when the uncertainty comes only from normal wrist close-up, crop, partial visibility, blur, or occlusion.
+- The reason should describe the visible contradiction. Do not write "contradiction" when the issue is only that the wrist-view is unclear or partial.
+
+Output ONLY valid JSON, no other text:
+{{
+  "overall_consistency_score": number from 1 to 5 in 0.5 increments,
+  "overall_consistency_reason": "brief reason under 30 words"
+}}
+"""

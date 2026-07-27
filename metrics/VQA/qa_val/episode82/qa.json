@@ -1,0 +1,130 @@
+{
+  "episode": "episode82",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "rectangular paymentsign with colorful top",
+          "B": "yellow cylindrical object",
+          "C": "light blue cube",
+          "D": "white roll with black center"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        127,
+        133
+      ],
+      "gt_episode_length": 151
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "rectangular paymentsign with colorful top",
+          "B": "yellow cylindrical object",
+          "C": "light blue cube",
+          "D": "white roll with black center"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        112,
+        118
+      ],
+      "gt_episode_length": 151
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the rectangular paymentsign with colorful top",
+          "B": "hovering above the rectangular paymentsign with colorful top",
+          "C": "approaching the rectangular paymentsign with colorful top",
+          "D": "moving away from the rectangular paymentsign with colorful top"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        36,
+        43
+      ],
+      "gt_episode_length": 151
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the rectangular paymentsign with colorful top",
+          "B": "hovering above the rectangular paymentsign with colorful top",
+          "C": "approaching the rectangular paymentsign with colorful top",
+          "D": "moving away from the rectangular paymentsign with colorful top"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        50,
+        55
+      ],
+      "gt_episode_length": 151
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "rectangular paymentsign with colorful top",
+          "B": "yellow cylindrical object",
+          "C": "light blue cube",
+          "D": "white roll with black center"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        79,
+        86
+      ],
+      "gt_episode_length": 151
+    }
+  ]
+}

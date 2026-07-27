@@ -1,0 +1,105 @@
+# vlm_consistency01 few-shot VLM prompt — edit this file + test_data/vlm_data_base to update scoring.
+# Loaded via exec() in metrics/_common/vlm_judge_01.py (load_prompt_config).
+
+DEFAULT_REFERENCE_DB = "test_data/vlm_data_base"
+
+VLM_INTRO_TEMPLATE = """You are an expert evaluator of tri-view robot consistency.
+
+Each image is a horizontal tri-view strip, left to right:
+1. head-view (third-person head camera, primary view)
+2. left-wrist-view (left arm wrist camera)
+3. right-wrist-view (right arm wrist camera)
+
+## Reference sample library (study these examples first)
+
+{positive_library_intro}
+
+{negative_library_intro}
+"""
+
+VLM_POSITIVE_LIBRARY_INTRO = """**Positive library**: Clear image quality, tri-view consistency, and correct task execution (working arm matches the labeled executing arm; Head and the corresponding Wrist agree on action and grasped object)."""
+
+VLM_NEGATIVE_LIBRARY_INTRO = """**Negative library** (each item starts at 5.0; score = max(0, 5.0 - total deductions), one decimal place):
+
+- **Image quality** (deducts both state and object, low weight): per view mild -0.1, moderate -0.2, severe -0.4; sum across three views, **cap -0.5 per quality dimension**. Clarity only; **not** the same as unidentifiable.
+- **State inconsistency** (state only; Head and working wrist **both identifiable**): cross-view action conflict **-1.5**.
+  - Must deduct: Head shows working arm operating while working wrist shows opposite action; Head shows no arm operation while working wrist shows hallucinated grasp/operation.
+  - **Do not deduct**: non-working-arm wrist idle/unclear; slight literal mismatch with phase description text when both views agree on state.
+- **State unidentifiable** (state only; **only when action truly cannot be judged**, do not overuse):
+  - Definition: full blur/overexposure/occlusion so **cannot tell** gripper open/close or whether the arm is moving.
+  - **Default identifiable**: Head usually shows arm motion; Wrist counts as identifiable if gripper/wrist region is visible; tight wrist crop is not unidentifiable.
+  - Working wrist only unidentifiable: **-0.8**
+  - Head only unidentifiable (rare): **-0.8**
+  - Head and working wrist **both** unidentifiable (extreme): **-1.3** (do not split as -1.0 + -1.0)
+  - Views marked unidentifiable: **do not** deduct image quality again for that view.
+- **Object inconsistency** (object only; both must be identifiable): Head vs working wrist clearly different objects -1.0; wrong object -1.0; Head grasps but working wrist identifiable with no object -0.5; color -1.0; category -0.7.
+- **Object unidentifiable** (object only; deduct **only when presence/category/color truly cannot be seen**):
+  - Visible object silhouette or can judge grasped vs empty → identifiable, no deduct.
+  - One side unidentifiable: **-0.8**; both sides: **-1.3**; unidentifiable views: no repeat quality deduct.
+
+**Consistency first**: Head and working wrist **both identifiable and no conflict** → state/object usually **≥4.2**. Heavy deduct on conflict, moderate on unclear views; do not label normal tight wrist crops as "both unidentifiable".
+
+Deduct from actual observation per item; **do not copy fixed deduction phrases (e.g. always state -2.0)**."""
+
+REFERENCE_CAPTIONS = {
+    "positive": "Positive: clear quality, arm and manipulated object identifiable, arm state and grasp consistent across views",
+    "negative_01": "Negative: left view severely blurred and fully unidentifiable, Head identifiable; working wrist state/object unidentifiable -0.8, quality -0.4",
+    "negative_02": "Negative: moderate blur all three views, quality -0.5; Head and working wrist both severely unidentifiable, state/object -1.3 each",
+    "negative_03": "Negative: Head left arm grasps red object, left wrist idle, right wrist hallucinated grasp; working wrist conflict -1.5, non-working-arm hallucination -1.5, state -3",
+    "negative_04": "Negative: Head no operation, right wrist grasps light blue object, hallucination -1.5; object inconsistency -1",
+    "negative_05": "Negative: Head both arms operating, right wrist conflicts with Head -1.5; right wrist not grasping -0.5",
+    "negative_06": "Negative: Head right arm only, right wrist no state -1.5; not grasping -1",
+    "negative_07": "Negative: Head left arm only, left wrist conflict -1.5, non-working right wrist hallucination -1.5; left wrist not grasping -1",
+    "negative_08": "Negative: Head right arm only, non-working left wrist hallucinated grasp -1.5; object -1",
+    "negative_09": "Negative: non-working right wrist hallucination and object category differs from Head -1.5; -0.7",
+    "negative_10": "Negative: non-working right wrist hallucination and object color differs from Head -1.5; -1",
+}
+
+VLM_EVAL_TEMPLATE = """## Sample to evaluate (figure {target_figure})
+
+Task instruction: {instruction}
+Current phase type: {phase}
+Current phase description: {description}
+Labeled executing arm: {arm}
+(**Only** consistency of {arm}'s Wrist vs Head on state/object is scored)
+
+Evaluate figure {target_figure}:
+1. **state_consistency**: Same action state between Head and **{arm}'s Wrist**.
+2. **object_consistency**: Same grasped/manipulated object between Head and **{arm}'s Wrist**.
+
+## First classify: identifiable / conflict / blur
+
+1. **Identifiable and no conflict** (common in ground truth): both views clear and mutually supportive → each **4.2–5.0**, mild quality only -0.1~0.3.
+2. **Identifiable but conflicting** (common in bad generated video): from **-1.5**, may add quality.
+3. **Unidentifiable** (only full blur/overexposure/cannot see gripper or object):
+   - One side unidentifiable: **-0.8**; both sides: **-1.3** (item often 3.2–3.7, lower if extreme).
+   - **Do not** label "Head and working wrist both unidentifiable" for tight wrist crop, partial crop, or mild blur.
+
+## Phase hints ({phase})
+
+- **release_open / complete**: Open gripper, no grasp is normal.
+- **manipulate / execute_action**: Sustained grasp not required; both views show operation.
+- **hold / grasp_close**: Closed gripper counts as identifiable grasp.
+
+## Wrist tolerance
+
+- Wrist may not show full object but closed gripper / grasp visible → **object identifiable**.
+- Wrist background blurry but gripper visible → **state identifiable**.
+- **Do not** substitute phase description text for image; **do not** score below 3.5 without conflict just because labeled action is unclear.
+
+Score from 5.0 downward; reason must state category (no conflict / conflict / unidentifiable / quality) and total (within 50 chars).
+
+Score reference:
+- **4.2–5.0**: Both identifiable and consistent (typical ground truth)
+- **3.2–4.1**: Mild blur or one side slightly unidentifiable, no clear conflict
+- **2.0–3.1**: Clear conflict, or both sides severely unidentifiable
+- **0–1.9**: Severe hallucination / total conflict
+
+Output valid JSON only, no markdown, no other text:
+{{
+  "state_consistency_score": number from 0 to 5,
+  "state_consistency_reason": "actual deductions and total, within 50 chars",
+  "object_consistency_score": number from 0 to 5,
+  "object_consistency_reason": "actual deductions and total, within 50 chars"
+}}
+"""

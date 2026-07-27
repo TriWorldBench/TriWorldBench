@@ -1,0 +1,130 @@
+{
+  "episode": "episode62",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "white fan",
+          "B": "black rectangular object",
+          "C": "green bottle",
+          "D": "red mat"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        65,
+        79
+      ],
+      "gt_episode_length": 146
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "white fan",
+          "B": "black rectangular object",
+          "C": "green bottle",
+          "D": "red mat"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        4,
+        36
+      ],
+      "gt_episode_length": 146
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "white fan",
+          "B": "black rectangular object",
+          "C": "green bottle",
+          "D": "red mat"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        112,
+        116
+      ],
+      "gt_episode_length": 146
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the white fan",
+          "B": "hovering above the white fan",
+          "C": "approaching the white fan",
+          "D": "moving away from the white fan"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        59,
+        64
+      ],
+      "gt_episode_length": 146
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the white fan",
+          "B": "hovering above the white fan",
+          "C": "approaching the white fan",
+          "D": "moving away from the white fan"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        44,
+        51
+      ],
+      "gt_episode_length": 146
+    }
+  ]
+}

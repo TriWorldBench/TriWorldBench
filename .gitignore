@@ -1,0 +1,40 @@
+# 大文件夹 — 不上传
+generate/
+input/
+test_data/*
+!test_data/vlm_data_base/
+!test_data/vlm_data_base/**
+# test_data/STATE
+# test_data/STATE_100
+# test_data/STATE_vlm
+# test_data/vlm_gt_dataset
+# test_data/gt_manifest-x.csv
+# test_data/gt_manifest.csv
+# test_data/vlm_gt_manifest.csv
+# test_data/vlm_gt_mapping.json
+
+output/
+vlm_temp/
+weights/aesthetic_model
+weights/clip_model
+weights/clip-vit-base-patch16
+weights/depth-anything
+weights/dino_model
+weights/_hf_downloads
+weights/METRIC_WEIGHTS_MANIFEST.txt
+weights/pyiqa_model
+weights/Qwen2.5-VL-7B-Instruct
+weights/qwenvl3
+weights/raft_model
+weights/sam
+weights/sam3
+weights/torch_home
+weights/VFIMamba
+weights/vjepa
+# 编辑器/缓存
+.gitignore.swp
+*.swp
+*~
+__pycache__/
+*.py[cod]
+.DS_Store

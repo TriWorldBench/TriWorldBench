@@ -1,0 +1,67 @@
+# Triworld Benchmark Evaluation Configuration
+# Paths are relative to the project root unless noted otherwise.
+
+# --- Evaluation Input ---
+# Preprocessed dataset under generate/. Use <method>_<batch_ts>_latest to follow newest run.
+# Example: generate/<your_method>_20260715_103045_latest
+eval_input: generate/<your_method>_latest
+
+# --- Metrics Selection ---
+# List metric indices to run [0, ..., 18], or "all" for all 19 metrics
+# Order: 0=Instruction_Following, 1=Interaction_Quality, 2=Perspectivity,
+#        3=background_consistency, 4=dynamic_state_alignment, 5=flow_score,
+#        6=jepa_similarity, 7=photometric_smoothness, 8=psnr, 9=semantic_alignment,
+#        10=ssim, 11=subject_consistency, 12=trajectory_accuracy,
+#        13=vlm_consistency01, 14=vlm_consistency02, 15=vlm_consistency03,
+#        16=VQA, 17=aesthetic_quality, 18=image_quality
+# aesthetic_quality / image_quality CSV scores apply trajectory+VLM penalties;
+# raw base scores are logged under logs/metric_17_*.log and logs/metric_18_*.log
+metrics: all
+# --- Output ---
+output_dir: output
+
+# --- Runtime ---
+# Max parallel episode tasks per GPU (default cap for all metrics)
+parallel_per_gpu: 4
+# Per-metric caps (must be <= parallel_per_gpu); background_consistency needs ~38GB VRAM
+metric_parallel_per_gpu:
+  background_consistency: 1
+  semantic_alignment: 1
+  subject_consistency: 2
+  trajectory_accuracy: 4
+# Visible GPU device IDs (absolute indices on the host)
+gpu_list: "0,1,2,3,4,5,6,7"
+# Python interpreter for metric evaluation; use python after activating triworldbench,
+# or set an absolute path to the environment's Python.
+python: python
+
+# --- Model Weights ---
+# Root directory for all metric model weights (internal structure must match original)
+weights_root: ./weights
+
+# --- Data References (relative to project root) ---
+# GT flat episode trees (episodeN/{head,left,right}/frames/...)
+gt_dataset: test_data/gt_dataset
+# Per-episode STATE JSON files (episodeN.json)
+STATE: test_data/STATE
+hyperparameters: config/hyperparameters.yaml
+
+# --- Preprocessing Defaults ---
+preprocess:
+  target_width: 320
+  target_height: 240
+  align_mode: match_gt  # match_gt | min | none
+  workers: 8
+
+# --- VLM Consistency ---
+# vlm_consistency01/02/03 run fixed prompts: metrics/vlm_prompt/01.txt, 02.txt, 03.txt
+# vlm_reference_db required for vlm_consistency01 (01 few-shot)
+vlm_reference_db: test_data/vlm_data_base
+vlm_max_new_tokens: 1024  # VLM generate() max_new_tokens; raise if vlm_raw JSON truncates
+
+# --- Episode Weights ---
+# false: equal average; true: frame-bucket weights (<200→0.32, 200–400→0.33, >400→0.35)
+episode_weights: true
+
+# --- Advanced ---
+resume: false

@@ -1,0 +1,130 @@
+{
+  "episode": "episode11",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist's view?"
+      ],
+      "selections": [
+        {
+          "A": "blue dome-shaped bell",
+          "B": "black arm gripper",
+          "C": "white table surface",
+          "D": "pink wall background"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        61,
+        66
+      ],
+      "gt_episode_length": 76
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the blue dome-shaped bell",
+          "B": "hovering above the blue dome-shaped bell",
+          "C": "approaching the blue dome-shaped bell",
+          "D": "moving away from the blue dome-shaped bell"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        41,
+        54
+      ],
+      "gt_episode_length": 76
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist's view?"
+      ],
+      "selections": [
+        {
+          "A": "blue dome-shaped bell",
+          "B": "black arm gripper",
+          "C": "white table surface",
+          "D": "pink wall background"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        74,
+        75
+      ],
+      "gt_episode_length": 76
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the blue dome-shaped bell",
+          "B": "hovering above the blue dome-shaped bell",
+          "C": "approaching the blue dome-shaped bell",
+          "D": "moving away from the blue dome-shaped bell"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        4,
+        26
+      ],
+      "gt_episode_length": 76
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the blue dome-shaped bell",
+          "B": "hovering above the blue dome-shaped bell",
+          "C": "approaching the blue dome-shaped bell",
+          "D": "moving away from the blue dome-shaped bell"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        35,
+        40
+      ],
+      "gt_episode_length": 76
+    }
+  ]
+}

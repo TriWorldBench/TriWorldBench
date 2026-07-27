@@ -1,0 +1,238 @@
+# triworldbench environment — reproducible dependency lock
+# Target: Python 3.10, CUDA 12.x GPU host
+#
+# Quick setup
+#   conda create -n triworldbench python=3.10.0 -y
+#   conda activate triworldbench
+#   pip install --upgrade pip setuptools wheel
+#   pip install -r requirements.txt
+#   pip install --no-deps --no-build-isolation -r requirements_no_deps.txt
+#
+# System tools (not installed by pip): ffmpeg, ffprobe
+#
+# Notes
+# - transformers is pinned to a git commit for Qwen3-VL support.
+# - pyiqa, videojedi, jepa must use --no-deps (see requirements_no_deps.txt).
+# - Keep setuptools<81 (openai-clip / SAM3 import pkg_resources).
+# - If the transformers git clone is unstable, install the same commit from
+#   https://github.com/huggingface/transformers/archive/33d1bc04300c804222db4d1a1fa12ed48f89d8b6.tar.gz
+#   with --no-build-isolation --no-deps, then skip the transformers line here.
+
+setuptools<81
+
+# --- Core ML stack ---
+torch==2.10.0
+torchvision==0.25.0
+torchaudio==2.10.0
+triton==3.6.0
+xformers==0.0.35.dev1120
+
+# --- Hugging Face / VLM ---
+transformers @ git+https://github.com/huggingface/transformers.git@33d1bc04300c804222db4d1a1fa12ed48f89d8b6
+accelerate==1.1.0
+huggingface_hub==1.20.1
+tokenizers==0.22.2
+safetensors==0.8.0
+qwen-vl-utils==0.0.14
+bitsandbytes==0.49.0
+sentencepiece==0.2.1
+
+# --- Vision / video metrics ---
+opencv-python==4.10.0.84
+opencv-python-headless==4.11.0.86
+pillow==11.3.0
+scikit-image==0.25.2
+scikit-learn==1.7.2
+scipy==1.15.3
+numpy==1.26.0
+imageio==2.37.3
+imageio-ffmpeg==0.6.0
+moviepy==1.0.3
+av==13.1.0
+decord==0.6.0
+PyWavelets==1.8.0
+tifffile==2025.5.10
+
+# --- CLIP / IQA / detection ---
+openai-clip==1.0.1
+open_clip_torch==3.2.0
+timm==1.0.24
+# Install pyiqa from requirements_no_deps.txt with --no-deps to avoid pulling
+# transformers==4.37.2 and conflicting with the Qwen3-VL transformers pin.
+mmcv-lite==2.2.0
+mmdet==3.3.0
+mmengine==0.10.7
+ultralytics==8.3.236
+ultralytics-thop==2.0.20
+segment-anything==1.0
+sam3==0.1.0
+pycocotools==2.0.10
+facexlib==0.3.0
+filterpy==1.4.5
+lap==0.5.12
+
+# --- Flow / motion / 3D ---
+einops==0.8.1
+einops-exts==0.0.4
+fastdtw==0.3.4
+torchmetrics==1.9.0
+fvcore==0.1.5.post20221221
+iopath==0.1.10
+yacs==0.1.8
+omegaconf==2.3.0
+antlr4-python3-runtime==4.9.3
+shapely==2.1.2
+
+# --- JEPA / training shims ---
+fairscale==0.4.13
+submitit==1.5.4
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+webdataset==1.0.2
+braceexpand==0.1.7
+lmdb==2.2.1
+
+# --- General utilities ---
+PyYAML==6.0.3
+pandas==2.3.3
+polars==1.42.0
+polars-runtime-32==1.42.0
+tqdm==4.67.3
+requests==2.32.5
+json_repair==0.61.0
+easydict==1.13
+portalocker==3.2.0
+python-dotenv==1.2.1
+click==8.4.2
+typer==0.25.1
+rich==14.2.0
+tabulate==0.9.0
+regex==2026.5.9
+ftfy==6.1.1
+gdown==5.2.0
+filelock==3.21.2
+fsspec==2025.10.0
+packaging==26.0
+cloudpickle==3.1.2
+joblib==1.5.3
+psutil==7.1.3
+h5py==3.16.0
+matplotlib==3.10.7
+numba==0.65.1
+llvmlite==0.47.0
+
+# --- Dev / test (optional for eval runtime) ---
+pytest==7.2.0
+ruff==0.15.19
+pre_commit==4.6.0
+
+# --- Transitive pins (kept for exact repro) ---
+absl-py==2.4.0
+addict==2.4.0
+aiohappyeyeballs==2.6.2
+aiohttp==3.14.1
+aiosignal==1.4.0
+annotated-doc==0.0.4
+anyio==4.14.1
+asttokens==3.0.1
+async-timeout==5.0.1
+attrs==26.1.0
+beartype==0.22.9
+beautifulsoup4==4.15.0
+certifi==2026.6.17
+cfgv==3.5.0
+charset-normalizer==3.4.7
+colorama==0.4.6
+comm==0.2.3
+contourpy==1.3.2
+cuda-bindings==12.9.4
+cuda-pathfinder==1.5.5
+cuda-toolkit==13.0.2
+cycler==0.12.1
+datasets==5.0.0
+decorator==4.4.2
+dill==0.4.1
+distlib==0.4.3
+exceptiongroup==1.3.1
+executing==2.2.1
+fonttools==4.63.0
+frozenlist==1.8.0
+future==1.0.0
+grpcio==1.81.1
+h11==0.16.0
+hf-xet==1.5.1
+httpcore==1.0.9
+httpx==0.28.1
+icecream==2.2.0
+identify==2.6.19
+idna==3.18
+ImageIO==2.37.3
+iniconfig==2.3.0
+ipython==8.39.0
+ipywidgets==8.1.8
+jedi==0.20.0
+Jinja2==3.1.6
+jupyterlab_widgets==3.0.16
+kiwisolver==1.5.0
+lazy-loader==0.5
+lightning-utilities==0.15.3
+Markdown==3.10.2
+markdown-it-py==4.2.0
+MarkupSafe==3.0.3
+matplotlib-inline==0.2.2
+mdurl==0.1.2
+mpmath==1.3.0
+multidict==6.7.1
+multiprocess==0.70.19
+networkx==3.4.2
+nodeenv==1.10.0
+nvidia-cublas-cu12==12.8.4.1
+nvidia-cuda-cupti-cu12==12.8.90
+nvidia-cuda-nvrtc-cu12==12.8.93
+nvidia-cuda-runtime-cu12==12.8.90
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cufft-cu12==11.3.3.83
+nvidia-cufile-cu12==1.13.1.3
+nvidia-curand-cu12==10.3.9.90
+nvidia-cusolver-cu12==11.7.3.90
+nvidia-cusparse-cu12==12.5.8.93
+nvidia-cusparselt-cu12==0.7.1
+nvidia-nccl-cu12==2.27.5
+nvidia-nvjitlink-cu12==12.8.93
+nvidia-nvshmem-cu12==3.4.5
+nvidia-nvtx-cu12==12.8.90
+parso==0.8.7
+pexpect==4.9.0
+platformdirs==4.10.0
+pluggy==1.6.0
+proglog==0.1.12
+prompt_toolkit==3.0.52
+propcache==0.5.2
+protobuf==7.35.1
+ptyprocess==0.7.0
+pure_eval==0.2.3
+pyarrow==24.0.0
+Pygments==2.20.0
+pyparsing==3.3.2
+PySocks==1.7.1
+python-dateutil==2.9.0.post0
+pytz==2026.2
+six==1.17.0
+soupsieve==2.8.4
+stack-data==0.6.3
+sympy==1.14.0
+termcolor==3.3.0
+terminaltables==3.1.10
+threadpoolctl==3.6.0
+tomli==2.4.1
+traitlets==5.15.1
+typing_extensions==4.15.0
+tzdata==2026.2
+urllib3==2.7.0
+virtualenv==20.36.1
+wcwidth==0.8.1
+Werkzeug==3.1.8
+widgetsnbextension==4.0.15
+xxhash==3.7.1
+yapf==0.43.0
+yarl==1.24.2

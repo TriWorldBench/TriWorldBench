@@ -1,0 +1,110 @@
+version: "triworld"
+
+# Image quality and aesthetic quality share trajectory/VLM penalty coefficients.
+# Final CSV scores for metrics 17–18 use penalized values; raw base scores are
+# appended to logs/metric_17_aesthetic_quality.log and logs/metric_18_image_quality.log.
+# quality * exp(A * (trajectory_accuracy - 1))
+#         * exp(B * (vlm_consistency - 1))
+quality_penalties:
+  image_quality:
+    trajectory_penalty_A: 0.5
+    vlm_penalty_B: 0.5
+  aesthetic_quality:
+    trajectory_penalty_A: 0.5
+    vlm_penalty_B: 0.5
+  vlm_consistency_weights:
+    Interaction_Quality: 0.5
+    Perspectivity: 0.5
+  clamp_inputs_to_unit_interval: true
+
+motion_state:
+  # Motion/non-motion comes from segment_episode_phases STATE annotations.
+  # These phase labels are treated as moving; every other phase is static.
+  moving_phases:
+    - approach
+    - grasp_close
+    - manipulate
+    - handover_move
+    - execute_action
+    - adjust
+    - release_open
+  head_motion_rule: any_arm
+
+  # These are manually defined thresholds for generated dynamic_degree only.
+  generated_dynamic_thresholds:
+    head: 0.1213
+    left: 0.1213
+    right: 0.1213
+
+  # Expected-moving but generated motion is below threshold:
+  # factor = exp(under_motion_lambda * (dynamic - threshold)).
+  under_motion_lambda: 1.0
+
+  # Expected-static but generated motion is above threshold:
+  # factor = exp(-unexpected_motion_lambda * dynamic).
+  unexpected_motion_lambda: 1.0
+
+  consistency_metrics:
+    - subject_consistency
+    - background_consistency
+    - photometric_smoothness
+
+trajectory:
+  views:
+    - head
+  num_frames: 16
+  sampling: uniform_inclusive
+  # Triworld trajectory score is 1 / mean_DTW_distance. Exact matches have
+  # zero distance, so use the empirical normalization upper bound as full score.
+  zero_distance_score: 40.854
+
+vlm:
+  views:
+    - head
+    - left
+    - right
+  num_frames: 16
+  per_view_metrics:
+    head:
+      - Interaction_Quality
+      - Perspectivity
+      - Instruction_Following
+    left:
+      - Interaction_Quality
+      - Perspectivity
+    right:
+      - Interaction_Quality
+      - Perspectivity
+  aggregate_multiview_metrics:
+    - Interaction_Quality
+    - Perspectivity
+  head_only_metrics:
+    - Instruction_Following
+  outlier_filter:
+    enabled: true
+    method: median_absolute_deviation
+    # Scores are normalized to [0, 1]. With only three views, the absolute
+    # threshold prevents a single 1/5 score from dominating two 5/5 scores.
+    max_deviation_from_median: 0.25
+    mad_scale: 2.5
+    min_views_after_filter: 2
+
+metric_selection:
+  semantic_alignment_views:
+    - head
+  disabled_metrics:
+    - motion_smoothness
+    - Action_Following
+
+# PSNR is measured in dB; nPSNR for cross-metric reporting: 1 - exp(-PSNR / scale_c).
+psnr:
+  scale_c: 20.0
+
+vqa:
+  num_frames: 4
+
+aggregation:
+  view_reduce: mean
+  episode_reduce: mean
+  missing_penalty_component: skip_metric
+  output_round_digits: 6

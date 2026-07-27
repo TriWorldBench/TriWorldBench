@@ -1,0 +1,130 @@
+{
+  "episode": "episode31",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist's matching view?"
+      ],
+      "selections": [
+        {
+          "A": "red plastic stapler",
+          "B": "magenta mat",
+          "C": "black arm",
+          "D": "white surface"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        4,
+        26
+      ],
+      "gt_episode_length": 155
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the red plastic stapler",
+          "B": "hovering above the magenta mat",
+          "C": "approaching the white surface",
+          "D": "moving away from the object"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        51,
+        56
+      ],
+      "gt_episode_length": 155
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist's matching view?"
+      ],
+      "selections": [
+        {
+          "A": "red plastic stapler",
+          "B": "magenta mat",
+          "C": "black arm",
+          "D": "white surface"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        57,
+        70
+      ],
+      "gt_episode_length": 155
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the red plastic stapler",
+          "B": "hovering above the magenta mat",
+          "C": "approaching the white surface",
+          "D": "moving away from the object"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        113,
+        119
+      ],
+      "gt_episode_length": 155
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the red plastic stapler",
+          "B": "hovering above the magenta mat",
+          "C": "approaching the white surface",
+          "D": "moving away from the object"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        131,
+        137
+      ],
+      "gt_episode_length": 155
+    }
+  ]
+}

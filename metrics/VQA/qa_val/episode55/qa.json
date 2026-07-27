@@ -1,0 +1,130 @@
+{
+  "episode": "episode55",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "ceramic bowl light gray",
+          "B": "medium plate for food",
+          "C": "robot arm gripper",
+          "D": "white background"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        111,
+        115
+      ],
+      "gt_episode_length": 164
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "ceramic bowl light gray",
+          "B": "medium plate for food",
+          "C": "robot arm gripper",
+          "D": "white background"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        153,
+        162
+      ],
+      "gt_episode_length": 164
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "ceramic bowl light gray",
+          "B": "medium plate for food",
+          "C": "robot arm gripper",
+          "D": "white background"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        41,
+        51
+      ],
+      "gt_episode_length": 164
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the ceramic bowl light gray",
+          "B": "hovering above the ceramic bowl light gray",
+          "C": "approaching the ceramic bowl light gray",
+          "D": "moving away from the ceramic bowl light gray"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        59,
+        64
+      ],
+      "gt_episode_length": 164
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "ceramic bowl light gray",
+          "B": "medium plate for food",
+          "C": "robot arm gripper",
+          "D": "white background"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        126,
+        132
+      ],
+      "gt_episode_length": 164
+    }
+  ]
+}

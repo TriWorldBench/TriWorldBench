@@ -1,0 +1,130 @@
+{
+  "episode": "episode99",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the switch with thin red toggle",
+          "B": "the white rectangular plate",
+          "C": "the black object being held",
+          "D": "the pink wall section"
+        }
+      ],
+      "answers": [
+        "C"
+      ],
+      "frame_window": [
+        60,
+        65
+      ],
+      "gt_episode_length": 98
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which objects are visible in both the head and right wrist views?"
+      ],
+      "selections": [
+        {
+          "A": "the switch with thin red toggle",
+          "B": "the white rectangular plate",
+          "C": "the black object being held",
+          "D": "the pink wall section"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        5,
+        10
+      ],
+      "gt_episode_length": 98
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which objects are visible in both the head and right wrist views?"
+      ],
+      "selections": [
+        {
+          "A": "the switch with thin red toggle",
+          "B": "the white rectangular plate",
+          "C": "the black object being held",
+          "D": "the pink wall section"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        11,
+        25
+      ],
+      "gt_episode_length": 98
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which objects are visible in both the head and right wrist views?"
+      ],
+      "selections": [
+        {
+          "A": "the switch with thin red toggle",
+          "B": "the white rectangular plate",
+          "C": "the black object being held",
+          "D": "the pink wall section"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        11,
+        25
+      ],
+      "gt_episode_length": 98
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "touching the item",
+          "C": "hovering above it",
+          "D": "arm not visible"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        69,
+        97
+      ],
+      "gt_episode_length": 98
+    }
+  ]
+}

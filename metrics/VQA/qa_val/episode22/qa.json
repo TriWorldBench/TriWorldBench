@@ -1,0 +1,130 @@
+{
+  "episode": "episode22",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist's view?"
+      ],
+      "selections": [
+        {
+          "A": "light brown mug",
+          "B": "white metal rack",
+          "C": "orange-capped bottle",
+          "D": "silver phone"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        81,
+        84
+      ],
+      "gt_episode_length": 332
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "hovering above the item",
+          "C": "approaching the item",
+          "D": "moving away from the item"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        57,
+        70
+      ],
+      "gt_episode_length": 332
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist's view?"
+      ],
+      "selections": [
+        {
+          "A": "light brown mug",
+          "B": "white metal rack",
+          "C": "orange-capped bottle",
+          "D": "silver phone"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        291,
+        297
+      ],
+      "gt_episode_length": 332
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "hovering above the item",
+          "C": "approaching the item",
+          "D": "moving away from the item"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        114,
+        120
+      ],
+      "gt_episode_length": 332
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the left arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "hovering above the item",
+          "C": "approaching the item",
+          "D": "moving away from the item"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        37,
+        43
+      ],
+      "gt_episode_length": 332
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "episode": "episode93",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which bowl is visible in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the bowl on the left",
+          "B": "the bowl on the right",
+          "C": "a bowl partially out of frame",
+          "D": "no bowl"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        300,
+        332
+      ],
+      "gt_episode_length": 470
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which bowl is visible in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the bowl on the left",
+          "B": "the bowl on the right",
+          "C": "a bowl partially out of frame",
+          "D": "no bowl"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        389,
+        394
+      ],
+      "gt_episode_length": 470
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which bowl is visible in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the bowl on the left",
+          "B": "the bowl on the right",
+          "C": "a bowl partially out of frame",
+          "D": "no bowl"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        415,
+        420
+      ],
+      "gt_episode_length": 470
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which bowl is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the bowl on the far left",
+          "B": "the bowl on the middle right",
+          "C": "the bowl on the near right",
+          "D": "no bowl"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        4,
+        31
+      ],
+      "gt_episode_length": 470
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which bowl is visible in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the bowl on the far left",
+          "B": "the bowl on the middle right",
+          "C": "the bowl on the near right",
+          "D": "no bowl"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        300,
+        331
+      ],
+      "gt_episode_length": 470
+    }
+  ]
+}

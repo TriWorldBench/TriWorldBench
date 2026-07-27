@@ -1,0 +1,130 @@
+{
+  "episode": "episode29",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the black robotic gripper",
+          "B": "the playing card box",
+          "C": "the white table surface",
+          "D": "the pink wall background"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        54,
+        59
+      ],
+      "gt_episode_length": 117
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "the black robotic gripper",
+          "B": "the playing card box",
+          "C": "the white table surface",
+          "D": "the pink wall background"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        60,
+        73
+      ],
+      "gt_episode_length": 117
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "touching the item",
+          "C": "hovering above it",
+          "D": "approaching it"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        4,
+        30
+      ],
+      "gt_episode_length": 117
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "touching the item",
+          "C": "hovering above it",
+          "D": "approaching it"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        93,
+        99
+      ],
+      "gt_episode_length": 117
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "touching the item",
+          "C": "hovering above it",
+          "D": "approaching it"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        37,
+        44
+      ],
+      "gt_episode_length": 117
+    }
+  ]
+}

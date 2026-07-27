@@ -1,0 +1,130 @@
+{
+  "episode": "episode15",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "wooden rolling tool",
+          "B": "robot arm",
+          "C": "white surface",
+          "D": "black gripper"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        4,
+        33
+      ],
+      "gt_episode_length": 91
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "wooden rolling tool",
+          "B": "robot arm",
+          "C": "white surface",
+          "D": "black gripper"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        41,
+        47
+      ],
+      "gt_episode_length": 91
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist view?"
+      ],
+      "selections": [
+        {
+          "A": "wooden rolling tool",
+          "B": "robot arm",
+          "C": "white surface",
+          "D": "black gripper"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        90,
+        90
+      ],
+      "gt_episode_length": 91
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Does the left arm maintain the same grasp state across both views?"
+      ],
+      "selections": [
+        {
+          "A": "gripping tightly",
+          "B": "touching lightly",
+          "C": "releasing",
+          "D": "not visible"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        58,
+        63
+      ],
+      "gt_episode_length": 91
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the item",
+          "B": "hovering above it",
+          "C": "approaching it",
+          "D": "moving away"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        58,
+        63
+      ],
+      "gt_episode_length": 91
+    }
+  ]
+}

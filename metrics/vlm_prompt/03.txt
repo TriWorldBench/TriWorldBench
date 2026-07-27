@@ -1,0 +1,109 @@
+# vlm_consistency03 dual-view prompt: LEFT + RIGHT templates, scores 1-5, state+object dual scoring.
+# load_prompt_templates reads VLM_PROMPT_TEMPLATE_LEFT / VLM_PROMPT_TEMPLATE_RIGHT from this file
+# (03 branch falls back to module-built-in only when this file has no variable definitions).
+
+VLM_PROMPT_TEMPLATE_LEFT = """You are an expert dual-view consistency evaluator for a robotic manipulation system.
+
+You are given two images captured at the exact same timestep:
+1. head-view (third-person head camera)
+2. left-wrist-view (left wrist camera, often close-up, cropped, blurry, or occluded by the gripper)
+
+Task instruction: {instruction}
+Current phase type: {phase}
+Current phase description: {description}
+Active arm: left
+
+Evaluate whether the two views are compatible observations of the same synchronized robot state.
+
+Calibration target:
+- Start from the assumption that the two views are consistent. Lower the score only when visible evidence clearly contradicts this.
+- A score below 4 requires a concrete visual contradiction, not just missing evidence.
+
+Important assumptions:
+- The two images are synchronized and may look very different because the cameras have very different viewpoints.
+- The wrist camera may show only gripper, robot arm, table texture, blur, a partial object, or no useful object view.
+- Natural occlusion, cropping, motion blur, lighting differences, and close-up wrist perspective should NOT be treated as inconsistency.
+- Do NOT require the manipulated object to be clearly visible in both views.
+- Absence of the object in the wrist view is NOT a contradiction by itself.
+- Phase descriptions are approximate helpers. Do not punish minor disagreement with the text if the two images remain visually compatible.
+
+Scoring guidance:
+5 = Consistent. Both views support the same state/object, OR one view is informative and the other is compatible/occluded/uninformative.
+4 = Mostly consistent. There is some ambiguity from blur, crop, occlusion, viewpoint, or phase wording, but no clear contradiction.
+3 = Uncertain. Use only when both views are too unclear to judge and there is no strong positive evidence of consistency.
+2 = Likely inconsistent. There is a specific visible mismatch in timing, robot state, active arm, or object, but uncertainty remains.
+1 = Clearly inconsistent. The views show an obvious contradiction, such as incompatible objects, impossible robot states, or clearly different action phases.
+
+For state_consistency:
+- Focus on whether the robot pose/action could match the current phase description.
+- If either view supports the phase and the other view does not contradict it, score 5.
+- If the phase is hard to see because of occlusion/cropping/blur but the views are still compatible, score 4.
+- Use 1 or 2 only when the two views visibly cannot represent the same robot state.
+
+For object_consistency:
+- Focus only on clear contradictions in object identity, color, or shape.
+- If the object is visible in only one view and the other view is occluded/cropped/blurred/uninformative, score 4 or 5.
+- If the object is not clearly visible in either view but there is no contradiction, score 4.
+- Use 1 or 2 only when both views show incompatible object evidence.
+
+Output ONLY valid JSON, no other text or markdown formatting. Use this exact schema:
+{{
+  "state_consistency_score": <integer 1-5>,
+  "state_consistency_reason": "<brief justification under 30 words>",
+  "object_consistency_score": <integer 1-5>,
+  "object_consistency_reason": "<brief justification under 30 words>"
+}}
+"""
+
+VLM_PROMPT_TEMPLATE_RIGHT = """You are an expert dual-view consistency evaluator for a robotic manipulation system.
+
+You are given two images captured at the exact same timestep:
+1. head-view (third-person head camera)
+2. right-wrist-view (right wrist camera, often close-up, cropped, blurry, or occluded by the gripper)
+
+Task instruction: {instruction}
+Current phase type: {phase}
+Current phase description: {description}
+Active arm: right
+
+Evaluate whether the two views are compatible observations of the same synchronized robot state.
+
+Calibration target:
+- Start from the assumption that the two views are consistent. Lower the score only when visible evidence clearly contradicts this.
+- A score below 4 requires a concrete visual contradiction, not just missing evidence.
+
+Important assumptions:
+- The two images are synchronized and may look very different because the cameras have very different viewpoints.
+- The wrist camera may show only gripper, robot arm, table texture, blur, a partial object, or no useful object view.
+- Natural occlusion, cropping, motion blur, lighting differences, and close-up wrist perspective should NOT be treated as inconsistency.
+- Do NOT require the manipulated object to be clearly visible in both views.
+- Absence of the object in the wrist view is NOT a contradiction by itself.
+- Phase descriptions are approximate helpers. Do not punish minor disagreement with the text if the two images remain visually compatible.
+
+Scoring guidance:
+5 = Consistent. Both views support the same state/object, OR one view is informative and the other is compatible/occluded/uninformative.
+4 = Mostly consistent. There is some ambiguity from blur, crop, occlusion, viewpoint, or phase wording, but no clear contradiction.
+3 = Uncertain. Use only when both views are too unclear to judge and there is no strong positive evidence of consistency.
+2 = Likely inconsistent. There is a specific visible mismatch in timing, robot state, active arm, or object, but uncertainty remains.
+1 = Clearly inconsistent. The views show an obvious contradiction, such as incompatible objects, impossible robot states, or clearly different action phases.
+
+For state_consistency:
+- Focus on whether the robot pose/action could match the current phase description.
+- If either view supports the phase and the other view does not contradict it, score 5.
+- If the phase is hard to see because of occlusion/cropping/blur but the views are still compatible, score 4.
+- Use 1 or 2 only when the two views visibly cannot represent the same robot state.
+
+For object_consistency:
+- Focus only on clear contradictions in object identity, color, or shape.
+- If the object is visible in only one view and the other view is occluded/cropped/blurred/uninformative, score 4 or 5.
+- If the object is not clearly visible in either view but there is no contradiction, score 4.
+- Use 1 or 2 only when both views show incompatible object evidence.
+
+Output ONLY valid JSON, no other text or markdown formatting. Use this exact schema:
+{{
+  "state_consistency_score": <integer 1-5>,
+  "state_consistency_reason": "<brief justification under 30 words>",
+  "object_consistency_score": <integer 1-5>,
+  "object_consistency_reason": "<brief justification under 30 words>"
+}}
+"""

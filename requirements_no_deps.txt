@@ -1,0 +1,10 @@
+# Install AFTER requirements.txt with --no-deps to avoid dependency conflicts.
+#
+#   pip install --no-deps --no-build-isolation -r requirements_no_deps.txt
+#
+# pyiqa pins an older transformers release if installed with dependencies.
+# videojedi / jepa are local packages under ./external/.
+
+pyiqa==0.1.14.1
+./external/Triworld/video_quality/JEDi/dist/videojedi-0.1.3-py3-none-any.whl
+-e ./external/jepa

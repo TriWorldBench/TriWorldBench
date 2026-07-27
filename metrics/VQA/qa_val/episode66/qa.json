@@ -1,0 +1,130 @@
+{
+  "episode": "episode66",
+  "Q&A": [
+    {
+      "questions": [
+        "Are both Left and Right views true first-person wrist-camera views?\n\nFIRST-PERSON:\nThe camera looks outward from the wrist/gripper. Cropped fingers, gripper edges, or nearby arm surfaces are acceptable.\n\nTHIRD-PERSON:\nThe camera observes the robot externally. Answer \"No\" if any frame shows a complete gripper with its wrist/forearm, multiple connected arm links or joints, an arm base, most of an arm, or both arms.\n\nDo not judge by which edge the arm enters from or by rendering style.\n\nCheck every sampled frame independently. Output \"Yes\" only if both views are first-person in every frame. Otherwise output \"No\"."
+      ],
+      "selections": [
+        {
+          "A": "Yes",
+          "B": "No"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "question_type": "view"
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the left wrist's matching view?"
+      ],
+      "selections": [
+        {
+          "A": "toycar with shiny wheels",
+          "B": "basket made of woven wood",
+          "C": "bottle with white and blue cap",
+          "D": "computer mouse"
+        }
+      ],
+      "answers": [
+        "A"
+      ],
+      "frame_window": [
+        219,
+        232
+      ],
+      "gt_episode_length": 241
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "Which object is seen in the head view but not in the right wrist's matching view?"
+      ],
+      "selections": [
+        {
+          "A": "toycar with shiny wheels",
+          "B": "basket made of woven wood",
+          "C": "remote control",
+          "D": "bottle with white and blue cap"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        135,
+        141
+      ],
+      "gt_episode_length": 241
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the toycar with shiny wheels",
+          "B": "hovering above the toycar with shiny wheels",
+          "C": "approaching the toycar with shiny wheels",
+          "D": "arm not visible"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        55,
+        60
+      ],
+      "gt_episode_length": 241
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the toycar with shiny wheels",
+          "B": "hovering above the toycar with shiny wheels",
+          "C": "approaching the toycar with shiny wheels",
+          "D": "arm not visible"
+        }
+      ],
+      "answers": [
+        "D"
+      ],
+      "frame_window": [
+        163,
+        193
+      ],
+      "gt_episode_length": 241
+    },
+    {
+      "question_type": "window",
+      "questions": [
+        "What is the right arm doing?"
+      ],
+      "selections": [
+        {
+          "A": "holding the toycar with shiny wheels",
+          "B": "hovering above the toycar with shiny wheels",
+          "C": "approaching the toycar with shiny wheels",
+          "D": "arm not visible"
+        }
+      ],
+      "answers": [
+        "B"
+      ],
+      "frame_window": [
+        89,
+        94
+      ],
+      "gt_episode_length": 241
+    }
+  ]
+}
