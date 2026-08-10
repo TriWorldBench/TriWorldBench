@@ -2,6 +2,11 @@
 
 <h2 align="center">A Benchmark Evaluating Triple-View Embodied World Models</h2>
 
+<a href="docs/assets/wechat_group.jpg" target="_blank">
+  <img src="https://cdn.simpleicons.org/wechat/07C160" width="20" style="vertical-align: middle; margin-right: 5px;"> 
+  <b>WeChat Group</b>
+</a>
+
 ## News
 
 - 2026-07-28: We released the TriWorldBench code and valid set with 100 episodes and testset with 500 episodes.
@@ -266,7 +271,9 @@ On our 100-episode validation run with NVIDIA A100 40GB x 8 GPUs, the full evalu
 
 ## Leaderboard & Submission
 
-Submit your results on the [TriWorldBench leaderboard](https://triworldbench-triworldbench-space.hf.space/#top).
+Submit your results on the [TriWorldBench leaderboard](https://triworldbench-triworldbench-space.hf.space/#top).  
+Welcome to join our WeChat Group for further discussion and communication.
+![TriWorldBench WeChat Group](docs/assets/wechat_group.jpg)
 
 ---
 
