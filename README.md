@@ -2,10 +2,17 @@
 
 <h2 align="center">A Benchmark Evaluating Triple-View Embodied World Models</h2>
 
-<a href="docs/assets/wechat_group.jpg" target="_blank">
-  <img src="https://cdn.simpleicons.org/wechat/07C160" width="20" style="vertical-align: middle; margin-right: 5px;"> 
-  <b>WeChat Group</b>
-</a>
+<p align="center">
+<a href="https://arxiv.org/abs/2609.26314"><img src="https://img.shields.io/badge/arXiv-2609.26314-b31b1b?logo=arxiv&logoColor=white" height="28"></a>
+&nbsp;
+<a href="https://www.triworldbench.com/"><img src="https://img.shields.io/badge/Project-Website-green?logo=globe&logoColor=white" height="28"></a>
+&nbsp;
+<a href="https://huggingface.co/datasets/TriWorldBench/Dataset"><img src="https://img.shields.io/badge/Dataset-HuggingFace-yellow?logo=huggingface&logoColor=yellow" height="28"></a>
+&nbsp;
+<a href="https://mp.weixin.qq.com/s/6Kij59GlW4tjgiV-ekqkTw?scene=1&click_id=1254845571" target="_blank"><img src="https://img.shields.io/badge/Article-Synced-07C160?logo=wechat&logoColor=white" height="28"></a>
+&nbsp;
+<a href="docs/assets/wechat_group.jpg" target="_blank"><img src="https://img.shields.io/badge/Chat-Group-07C160?logo=wechat&logoColor=white" height="28"></a>
+</p>
 
 ## News
 
@@ -24,8 +31,8 @@
   - [Inference](#inference)
   - [Evaluation](#evaluation)
 - [Leaderboard & Submission](#leaderboard--submission)
-- [Acknowledgement](#acknowledgement)
 - [Citation](#citation)
+- [Acknowledgement](#acknowledgement)
 
 ---
 
@@ -273,8 +280,31 @@ On our 100-episode validation run with NVIDIA A100 40GB x 8 GPUs, the full evalu
 ## Leaderboard & Submission
 
 Submit your results on the [TriWorldBench leaderboard](https://triworldbench-triworldbench-space.hf.space/#top).  
-Welcome to join our WeChat Group for further discussion and communication.
-![TriWorldBench WeChat Group](docs/assets/wechat_group.jpg)
+Welcome to join our WeChat Group for further discussion and communication.  
+<img src="docs/assets/wechat_group.jpg" alt="TriWorldBench WeChat Group" width="320"/>
+
+---
+
+
+
+## Citation
+If you find our work useful, please consider citing:
+```
+@article{liu2026triworldbench,
+  title   = {TriWorldBench: A Tri-View Consistency Perspective on Embodied World Models},
+  author  = {Liu, Xuanyi and Wang, Haofeng and Li, Ruiqi and Yu, Danni and Wan, Rui and Zhang, Ruixu and Tao, Siyu and Yang, Xue and Zhang, Shaofeng and Zhang, Zicheng and Zhang, Jiaqi and Ma, Siwei},
+  journal = {arXiv preprint arXiv:2609.26314},
+  year    = {2026}
+}
+```
+```
+@misc{triworldbench2026,
+  title        = {{TriWorldBench}: A Benchmark Evaluating Triple-View Embodied World Models},
+  year         = {2026},
+  howpublished = {\url{https://github.com/TriWorldBench/TriWorldBench}},
+  note         = {GitHub repository}
+}
+```
 
 ---
 
@@ -285,20 +315,5 @@ Welcome to join our WeChat Group for further discussion and communication.
 We acknowledge [RoboTwin 2.0](https://robotwin-platform.github.io/) for providing the dataset and simulation platform support that enables embodied task evaluation.
 
 For video quality evaluation, TriWorldBench also benefits from the open-source evaluation community, including [WorldArena](https://github.com/tsinghua-fib-lab/WorldArena), [VBench](https://github.com/Vchitect/VBench), [EWMBench](https://github.com/AgibotTech/EWMBench), [WorldScore](https://github.com/haoyi-duan/WorldScore), [EvalCrafter](https://github.com/evalcrafter/EvalCrafter), and [JEDI](https://github.com/oooolga/JEDi).
-
----
-
-
-
-## Citation
-
-```
-@misc{triworldbench2026,
-  title        = {{TriWorldBench}: A Benchmark Evaluating Triple-View Embodied World Models},
-  year         = {2026},
-  howpublished = {\url{https://github.com/TriWorldBench/TriWorldBench}},
-  note         = {GitHub repository}
-}
-```
 
 ---
