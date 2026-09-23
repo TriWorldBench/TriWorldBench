@@ -9,7 +9,7 @@
 &nbsp;
 <a href="https://huggingface.co/datasets/TriWorldBench/Dataset"><img src="https://img.shields.io/badge/Dataset-HuggingFace-yellow?logo=huggingface&logoColor=yellow" height="28"></a>
 &nbsp;
-<a href="https://mp.weixin.qq.com/s/6Kij59GlW4tjgiV-ekqkTw?scene=1&click_id=1254845571" target="_blank"><img src="https://img.shields.io/badge/Article-Synced-07C160?logo=wechat&logoColor=white" height="28"></a>
+<a href="https://mp.weixin.qq.com/s/6Kij59GlW4tjgiV-ekqkTw?scene=1&click_id=1254845571" target="_blank"><img src="https://img.shields.io/badge/Article-机器之心-07C160?logo=wechat&logoColor=white" height="28"></a>
 &nbsp;
 <a href="docs/assets/wechat_group.jpg" target="_blank"><img src="https://img.shields.io/badge/Chat-Group-07C160?logo=wechat&logoColor=white" height="28"></a>
 </p>
